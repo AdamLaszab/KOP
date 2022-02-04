@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "182358467492",
+    "project_id": "lost-dogs-app",
+    "storage_bucket": "lost-dogs-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182358467492:android:8a4a614921beb846b0d731",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182358467492-a5tr5111hedl3vearimt60u5l0r3rgdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5VMlL1NZftWd7KwWLYXJm8rD7ZLsAQD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182358467492-a5tr5111hedl3vearimt60u5l0r3rgdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
