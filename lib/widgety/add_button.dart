@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:flutter_application_1/globals.dart' as globals;
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -62,7 +60,8 @@ class _PridavaniePsov extends State<PridavaniePsov> {
           'status': status,
           'postID': postID,
           'imgURL': downloadURL,
-          'uid': globals.userUid
+          'uid': globals.userUid,
+          'email': globals.email1
         })
         .then((_) => print('Added'))
         .catchError((error) => print('Add failed: $error'));
@@ -319,7 +318,7 @@ class _PridavaniePsov extends State<PridavaniePsov> {
                                       child: Icon(Icons.calendar_today))),
                             ),
                             Padding(
-                                padding: EdgeInsets.only(top: 30, bottom: 20),
+                                padding: EdgeInsets.only(top: 30),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.yellow[100],
