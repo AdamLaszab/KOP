@@ -1,4 +1,5 @@
 import 'package:flutter_application_1/chat/home.dart';
+import 'package:flutter_application_1/chat/recieved.dart';
 import 'package:flutter_application_1/widgety/profil.dart';
 import 'package:flutter_application_1/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,13 @@ import 'package:flutter_application_1/widgety/add_button.dart';
 import 'package:get/get.dart';
 import 'widgety/widget_list.dart';
 import 'obrazovky/login_screen.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
 
@@ -75,11 +79,23 @@ class _LostFoundPageState extends State<LostFoundPage> {
                 Get.off(() => Home());
               },
               leading: Icon(
+                Icons.search,
+                color: Colors.black87,
+              ),
+              trailing: Text(
+                'Find user',
+                style: TextStyle(fontSize: 22, color: Colors.black87),
+              )),
+          ListTile(
+              onTap: () {
+                Get.off(() => ChatRoomList());
+              },
+              leading: Icon(
                 Icons.chat_bubble,
                 color: Colors.black87,
               ),
               trailing: Text(
-                'Chat',
+                'Incoming messages',
                 style: TextStyle(fontSize: 22, color: Colors.black87),
               )),
           ListTile(

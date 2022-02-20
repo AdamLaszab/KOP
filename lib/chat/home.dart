@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/chat/chatscreen.dart';
 import 'package:flutter_application_1/chat/userdatabase.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
+import 'package:flutter_application_1/globals.dart' as globals;
 
 class Home extends StatefulWidget {
   @override
@@ -12,9 +12,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isSearching = false;
-  late Stream<QuerySnapshot> usersStream;
-
+  Stream<QuerySnapshot>? usersStream;
+  Stream<QuerySnapshot>? chatRoomsStream;
+  String myEmail = '', myProfilePic = '';
   TextEditingController searchEmailEditingController = TextEditingController();
+  getMyInfoFromSharedPreferences() {
+    myEmail = globals.email1;
+    myProfilePic = globals.avi;
+  }
 
   onSearchButtonClick() async {
     isSearching = true;
@@ -24,9 +29,52 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
+  getChatRoomIdByUsername(String a, String b) {
+    return "$a\_$b";
+  }
+
+  getChatRooms() async {
+    chatRoomsStream = await DatabaseMethods().getChatRooms();
+    setState(() {});
+  }
+
+  Widget searchUsersList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: usersStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data!.docs[index];
+                  String URL =
+                      "https://pbs.twimg.com/media/C8QssPsVYAAHBfN.jpg";
+                  return searchUser(URL, ds["email"]);
+                },
+              )
+            : Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
   Widget searchUser(String profileUrl, email) {
     return GestureDetector(
         onTap: () {
+          myEmail = globals.email1;
+          var chatRoomId = getChatRoomIdByUsername(myEmail, email);
+          var chatRoomId1 = getChatRoomIdByUsername(email, myEmail);
+          Map<String, dynamic> chatRoomInfoMap = {
+            "users": [myEmail, email],
+            "startUser": myEmail
+          };
+          Map<String, dynamic> chatRoomInfoMap1 = {
+            "users": [email, myEmail],
+            "startUser": email
+          };
+          DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
+          DatabaseMethods().createChatRoom(chatRoomId1, chatRoomInfoMap1);
+
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ChatScreen(email)));
         },
@@ -41,32 +89,19 @@ class _HomeState extends State<Home> {
         ));
   }
 
-  Widget searchUsersList() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: usersStream,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data!.docs[index];
-                  String URL = '';
-                  if (ds["photoUrl"] == null) {
-                    URL = "https://pbs.twimg.com/media/C8QssPsVYAAHBfN.jpg";
-                  } else {
-                    URL = ds["photoUrl"];
-                  }
-                  return searchUser(URL, ds["email"]);
-                },
-              )
-            : Center(child: CircularProgressIndicator());
-      },
-    );
+  chatRoomsList() {
+    return Container();
   }
 
-  Widget chatRoomsList() {
-    return Container();
+  onScreenLoaded() async {
+    await getMyInfoFromSharedPreferences();
+    getChatRooms();
+  }
+
+  @override
+  void initState() {
+    onScreenLoaded();
+    super.initState();
   }
 
   @override

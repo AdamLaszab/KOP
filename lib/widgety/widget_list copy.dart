@@ -83,129 +83,79 @@ class _HlavnyListState extends State<HlavnyListView> {
                       )
                     ],
                   ),
-                  ListView.separated(
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(top: 10, bottom: 40),
+                  ListView.builder(
                     shrinkWrap: true,
                     itemCount: data.size,
                     itemBuilder: (context, index) {
-                      return Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.20,
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.02,
-                                    left: MediaQuery.of(context).size.width *
-                                        0.02),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        data.docs[index]['name'],
-                                        style: const TextStyle(
-                                            height: 1,
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.01,
-                                          left: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.03,
-                                          bottom: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.008,
-                                        ),
-                                        child: Row(children: [
-                                          Icon(Icons.access_time_rounded),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 6.5, right: 5),
-                                              child: Text(
-                                                  DateFormat('dd-MM-yyyy')
-                                                      .format(data.docs[index]
-                                                              ['time']
-                                                          .toDate()),
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black87))),
-                                        ]),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.03,
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.008),
-                                        child: Row(children: [
-                                          Icon(Icons.location_on),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 6.5, right: 5),
-                                              child: Text(
-                                                  data.docs[index]["place"],
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black87))),
-                                        ]),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.03),
-                                        child: Row(children: [
-                                          Icon(Icons.pets),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 6.5, right: 5),
-                                              child: Text(
-                                                  data.docs[index]["breed"],
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black87))),
-                                        ]),
-                                      )
-                                    ]),
-                              ),
+                      return Container(
+                          height: 160,
+                          color: Colors.yellow,
+                          child: Stack(children: [
+                            Positioned(
+                                left: 30,
+                                top: 20,
+                                child: FittedBox(
+                                  child: Text(data.docs[index]['name'],
+                                      style: const TextStyle(
+                                          height: 2,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87)),
+                                )),
+                            Positioned(
+                                top: 110,
+                                left: 60,
+                                child: Row(children: [
+                                  Icon(Icons.access_time_rounded),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 6.5, right: 5),
+                                      child: Text(
+                                          DateFormat('dd-MM-yyyy').format(data
+                                              .docs[index]['time']
+                                              .toDate()),
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black87))),
+                                ])),
+                            Positioned(
+                                top: 80,
+                                left: 60,
+                                child: Row(children: [
+                                  Icon(Icons.location_on),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 6.5, right: 5),
+                                      child: Text(data.docs[index]["place"],
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black87))),
+                                ])),
+                            Positioned(
+                                top: 20,
+                                left: 195,
+                                child: Container(
+                                    width: 160,
+                                    height: 135,
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: Image.network(
+                                            data.docs[index]['imgURL'],
+                                            fit: BoxFit.cover)))),
+                            Positioned(
+                              top: 26,
+                              left: 25,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20)))),
                             ),
-                            Stack(children: [
-                              Container(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: Image.network(
-                                          data.docs[index]['imgURL'],
-                                          fit: BoxFit.cover)),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.23,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.47),
-                              Positioned(
-                                left: MediaQuery.of(context).size.width * 0.34,
+                            Positioned(
+                                top: 12,
+                                left: 300,
                                 child: Transform.scale(
-                                    scale: MediaQuery.of(context).size.width *
-                                        0.006,
+                                    scale: 1.7,
                                     child: IconButton(
                                       padding: EdgeInsets.only(top: 5),
                                       onPressed: () {
@@ -379,13 +329,8 @@ class _HlavnyListState extends State<HlavnyListView> {
                                         Icons.more_horiz,
                                         color: Colors.white,
                                       ),
-                                    )),
-                              ),
-                            ])
-                          ]);
-                    },
-                    separatorBuilder: (context, position) {
-                      return Container(height: 20);
+                                    )))
+                          ]));
                     },
                   )
                 ]);

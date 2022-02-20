@@ -28,31 +28,31 @@ class _NewUser extends State<NewUser> {
         child: Scaffold(
           body: Container(
             color: Colors.white,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Stack(children: [
-                    Expanded(
-                      child: Image(image: AssetImage('assets/pesmacka.jpg')),
-                    ),
+                    Image(image: AssetImage('assets/pesmacka.jpg')),
                     Positioned(
-                        top: 210,
-                        height: 30,
+                        height: 50,
+                        top: MediaQuery.of(context).size.height * 0.27,
                         width: MediaQuery.of(context).size.width,
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(60)),
-                        ))
+                        )),
                   ]),
                   Padding(
                       padding: EdgeInsets.only(top: 20),
                       child: Text(
                         'Create your account',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 34),
+                        style: const TextStyle(fontSize: 30),
                       )),
                   Form(
                       key: formkey,
@@ -146,7 +146,7 @@ class _NewUser extends State<NewUser> {
                                 authService.createUserWithEmailAndPassword(
                                     emailController.text,
                                     passwordController.text);
-                                Get.toNamed('/login');
+                                Get.toNamed('/');
                               } else {
                                 Get.dialog(SimpleDialog(
                                   backgroundColor: Colors.red,

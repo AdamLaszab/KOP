@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Image(image: AssetImage('assets/pesmacka.jpg')),
                       Positioned(
                           height: 50,
-                          top: 180,
+                          top: MediaQuery.of(context).size.height * 0.27,
                           width: MediaQuery.of(context).size.width,
                           child: Container(
                             decoration: BoxDecoration(
@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextSpan(
                                 style:
                                     TextStyle(fontSize: 15, color: Colors.blue),
-                                text: ' SIGN UP',
+                                text: ' SIGN UP  ',
                                 recognizer: new TapGestureRecognizer()
                                   ..onTap = () => Get.off(() => NewUser())),
                           ],

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:flutter_application_1/chat/helper.dart';
 import 'package:flutter_application_1/firebase/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_application_1/globals.dart' as globals;
@@ -13,22 +12,21 @@ class AuthService {
     if (user == null) {
       return null;
     }
-    String photo;
     globals.userUid = user.uid;
-    SharedPreferenceHelper().saveUserEmail(user.email!);
-    SharedPreferenceHelper().saveUserId(user.uid);
-    if (user.photoURL == null) {
-      photo = "none";
-    } else {
-      photo = user.photoURL!;
-    }
-    SharedPreferenceHelper().saveProfile(photo);
 
     Map<String, dynamic> userInfoMap = {
       "email": user.email,
       "uid": user.uid,
       "photoUrl": user.photoURL
     };
+    String photo = '';
+    globals.email1 = user.email!;
+    if (user.photoURL == null) {
+      photo = 'none';
+    } else {
+      photo = user.photoURL!;
+    }
+    globals.avi = photo;
     DatabaseMethods().addUserInfoToDB(user.uid, userInfoMap);
     return User(user.uid, user.email);
   }
@@ -60,7 +58,7 @@ class AuthService {
     return await _firebaseAuth.signOut();
   }
 
-  Future<String?> signInwithGoogle() async {
+  Future<void> signInwithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
