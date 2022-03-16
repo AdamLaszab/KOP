@@ -48,9 +48,9 @@ class _HomeState extends State<Home> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   DocumentSnapshot ds = snapshot.data!.docs[index];
-                  String URL =
+                  String url =
                       "https://pbs.twimg.com/media/C8QssPsVYAAHBfN.jpg";
-                  return searchUser(URL, ds["email"]);
+                  return searchUser(url, ds["email"]);
                 },
               )
             : Center(child: CircularProgressIndicator());

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_application_1/globals.dart' as globals;
 import 'package:intl/intl.dart';
 import 'package:flutter_application_1/chat/chatscreen.dart';
+import 'package:flutter_application_1/chat/userdatabase.dart';
 
 class HlavnyListView extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class HlavnyListView extends StatefulWidget {
 }
 
 bool _hasBeenPressed = true;
+getChatRoomIdByUsername(String a, String b) {
+  return "$a\_$b";
+}
 
 class _HlavnyListState extends State<HlavnyListView> {
   Stream<QuerySnapshot> dogs = FirebaseFirestore.instance
@@ -358,13 +362,70 @@ class _HlavnyListState extends State<HlavnyListView> {
                                                                     borderRadius:
                                                                         new BorderRadius.circular(
                                                                             30))),
-                                                            onPressed: () => Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder: (context) =>
-                                                                        ChatScreen(data.docs[index]
-                                                                            [
-                                                                            'email']))),
+                                                            onPressed: () {
+                                                              var chatRoomId =
+                                                                  getChatRoomIdByUsername(
+                                                                      globals
+                                                                          .email1,
+                                                                      data.docs[
+                                                                              index]
+                                                                          [
+                                                                          'email']);
+                                                              var chatRoomId1 =
+                                                                  getChatRoomIdByUsername(
+                                                                      data.docs[
+                                                                              index]
+                                                                          [
+                                                                          'email'],
+                                                                      globals
+                                                                          .email1);
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  chatRoomInfoMap =
+                                                                  {
+                                                                "users": [
+                                                                  globals
+                                                                      .email1,
+                                                                  data.docs[
+                                                                          index]
+                                                                      ['email']
+                                                                ],
+                                                                "startUser":
+                                                                    globals
+                                                                        .email1
+                                                              };
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  chatRoomInfoMap1 =
+                                                                  {
+                                                                "users": [
+                                                                  data.docs[
+                                                                          index]
+                                                                      ['email'],
+                                                                  globals.email1
+                                                                ],
+                                                                "startUser":
+                                                                    data.docs[
+                                                                            index]
+                                                                        [
+                                                                        'email']
+                                                              };
+                                                              DatabaseMethods()
+                                                                  .createChatRoom(
+                                                                      chatRoomId,
+                                                                      chatRoomInfoMap);
+                                                              DatabaseMethods()
+                                                                  .createChatRoom(
+                                                                      chatRoomId1,
+                                                                      chatRoomInfoMap1);
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          ChatScreen(data.docs[index]
+                                                                              [
+                                                                              'email'])));
+                                                            },
                                                             child: Container(
                                                                 child: Text(
                                                               "Message User in App",
