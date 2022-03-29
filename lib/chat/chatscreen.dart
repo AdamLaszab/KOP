@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_application_1/chat/userdatabase.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/globals.dart' as globals;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithEmail;
@@ -16,6 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Stream<QuerySnapshot>? messageStream;
   String? myEmail = globals.email1, myProfilePic = '';
   String messageId = '';
+  String fToken = '';
   TextEditingController messageTextEdittingController = TextEditingController();
   getMyInfo() async {
     myEmail = globals.email1;
@@ -67,7 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
           DatabaseMethods()
               .updateLastMessageSent(chatRoomId1, lastMessageInfoMap);
-
+          getThisUserToken(message);
           if (sendClicked) {
             messageTextEdittingController.text = '';
             messageId = "";
@@ -75,6 +79,45 @@ class _ChatScreenState extends State<ChatScreen> {
         });
       });
     }
+  }
+
+  getThisUserToken(String message) async {
+    QuerySnapshot querySnapshot =
+        await DatabaseMethods().getUserInfo(widget.chatWithEmail);
+    fToken = "${querySnapshot.docs[0]["token"]}";
+    sendNotification(message, fToken, myEmail);
+  }
+
+  sendNotification(String title, String token, String? email) async {
+    final data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+      'id': '1',
+      'status': 'done',
+      'message': title
+    };
+    try {
+      http.Response response =
+          await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization':
+                    'key=AAAAKnVpY6Q:APA91bF3Unv-sA19EdjrDIzmEyOI1kzB-PaOItPKXAwYQN-DD2LxzcEnr26gcYkKAjYZ07EJ78Kz4IUaXRWnyhlk8hRL3HN2XVcKcwYmrTlBMUjcpW_RfMwbN64EYv99eAm2wWjb8tMH'
+              },
+              body: jsonEncode(<String, dynamic>{
+                'notification': <String, dynamic>{
+                  'title': email,
+                  'body': title
+                },
+                'priority': 'high',
+                'data': data,
+                'to': '$token'
+              }));
+      if (response.statusCode == 200) {
+        print("Yeh notification got sent");
+      } else {
+        print("error");
+      }
+    } catch (e) {}
   }
 
   Widget chatMessageTile(String message, bool sendByMe) {

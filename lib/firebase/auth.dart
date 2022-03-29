@@ -7,7 +7,6 @@ import 'package:flutter_application_1/chat/userdatabase.dart';
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   User? _userFromFirebase(auth.User? user) {
     if (user == null) {
       return null;
@@ -17,7 +16,8 @@ class AuthService {
     Map<String, dynamic> userInfoMap = {
       "email": user.email,
       "uid": user.uid,
-      "photoUrl": user.photoURL
+      "photoUrl": user.photoURL,
+      "token": globals.deviceToken
     };
     String photo = '';
     globals.email1 = user.email!;

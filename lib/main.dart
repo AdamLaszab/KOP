@@ -1,4 +1,5 @@
 import 'package:flutter_application_1/chat/home.dart';
+import 'package:flutter_application_1/chat/push.dart';
 import 'package:flutter_application_1/chat/recieved.dart';
 import 'package:flutter_application_1/widgety/profil.dart';
 import 'package:flutter_application_1/wrapper/wrapper.dart';
@@ -12,10 +13,15 @@ import 'package:get/get.dart';
 import 'widgety/widget_list.dart';
 import 'obrazovky/login_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_application_1/globals.dart' as globals;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  LocalNotificationService();
+  String? token = await FirebaseMessaging.instance.getToken();
+  globals.deviceToken = token;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
@@ -54,6 +60,14 @@ class LostFoundPage extends StatefulWidget {
 
 class _LostFoundPageState extends State<LostFoundPage> {
   @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.getInitialMessage();
+    FirebaseMessaging.onMessage.listen((event) {
+      LocalNotificationService.display(event);
+    });
+  }
+
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(

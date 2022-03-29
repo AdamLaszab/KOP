@@ -4,3 +4,4 @@ bool state1 = true;
 String userUid = '';
 String email1 = '';
 String avi = '';
+String? deviceToken = '';
