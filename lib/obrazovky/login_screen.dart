@@ -14,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
+GlobalKey<FormState> formkey1 = GlobalKey<FormState>();
 
 class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.white,
                 child: SingleChildScrollView(
                     child: Form(
-                  key: formkey,
+                  key: formkey1,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,13 +42,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       Stack(children: [
                         Image(image: AssetImage('assets/pesmacka.jpg')),
                         Positioned(
-                            height: 50,
-                            top: MediaQuery.of(context).size.height * 0.29,
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            top: MediaQuery.of(context).size.height * 0.27,
                             width: MediaQuery.of(context).size.width,
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(60)),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(40),
+                                      topRight: Radius.circular(40))),
                             )),
                       ]),
                       Padding(

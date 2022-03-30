@@ -47,10 +47,13 @@ class MyApp extends StatelessWidget {
             create: (_) => AuthService(),
           ),
         ],
-        child: GetMaterialApp(initialRoute: '/', routes: {
-          '/': (context) => Wrapper(),
-          '/login': (context) => LoginScreen(),
-        }));
+        child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: '/',
+            routes: {
+              '/': (context) => Wrapper(),
+              '/login': (context) => LoginScreen(),
+            }));
   }
 }
 

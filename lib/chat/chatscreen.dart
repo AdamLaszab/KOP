@@ -71,7 +71,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
           DatabaseMethods()
               .updateLastMessageSent(chatRoomId1, lastMessageInfoMap);
-          getThisUserToken(message);
           if (sendClicked) {
             messageTextEdittingController.text = '';
             messageId = "";
@@ -219,6 +218,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     GestureDetector(
                         onTap: () {
                           addMessage(true);
+                          getThisUserToken(messageTextEdittingController.text);
                         },
                         child: Icon(Icons.send))
                   ],
