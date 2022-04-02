@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MediaQuery.of(context).size.width / 1.5,
                                     47)),
                             onPressed: () {
-                              if (formkey.currentState!.validate()) {
+                              if (formkey1.currentState!.validate()) {
                                 if (passwordController.text.length > 6) {
                                   authService.signInWithEmailAndPassword(
                                       emailController.text,
