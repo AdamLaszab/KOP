@@ -30,7 +30,7 @@ class _Profil extends State<Profil> {
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      Get.toNamed('/');
+                      Get.offAll('/');
                     },
                   ),
                   centerTitle: true,

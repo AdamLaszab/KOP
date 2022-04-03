@@ -366,7 +366,7 @@ class _PridavaniePsov extends State<PridavaniePsov> {
                                                             "Post Uploaded Successfully",
                                                             Duration(
                                                                 seconds: 2)));
-                                                Get.toNamed('/');
+                                                Get.offAll('/');
                                                 _formkey1.currentState!.reset();
                                               }
                                             },
