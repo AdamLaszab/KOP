@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/firebase/auth.dart';
 import 'package:flutter_application_1/obrazovky/signin_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:get/get.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -190,8 +189,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: TextStyle(
                                       fontSize: 15, color: Colors.blue),
                                   text: ' SIGN UP  ',
-                                  recognizer: new TapGestureRecognizer()
-                                    ..onTap = () => Get.off(() => NewUser())),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => NewUser()));
+                                    })
                             ],
                           ),
                         ),
