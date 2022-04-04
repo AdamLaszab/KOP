@@ -55,7 +55,7 @@ class _NewUser extends State<NewUser> {
                         IconButton(
                           icon: Icon(Icons.arrow_back),
                           onPressed: () {
-                            Get.offAndToNamed('/login');
+                            Navigator.pop(context);
                           },
                         ),
                         Text(

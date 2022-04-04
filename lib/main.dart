@@ -81,7 +81,8 @@ class _LostFoundPageState extends State<LostFoundPage> {
         children: [
           ListTile(
               onTap: () {
-                Get.off(() => Profil());
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Profil()));
               },
               leading: Icon(
                 Icons.account_circle,
