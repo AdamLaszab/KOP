@@ -44,16 +44,31 @@ class _NewUser extends State<NewUser> {
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(60)),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40),
+                                  topRight: Radius.circular(40))),
                         )),
                   ]),
-                  Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Text(
-                        'Create your account',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 30),
-                      )),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: () {
+                            Get.offAndToNamed('/login');
+                          },
+                        ),
+                        Text(
+                          'Sign up',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 30),
+                        ),
+                        IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: () {},
+                        ),
+                      ]),
                   Form(
                       key: formkey,
                       child: Column(children: [
@@ -68,7 +83,7 @@ class _NewUser extends State<NewUser> {
                                 child: TextFormField(
                                     controller: emailController,
                                     style: TextStyle(color: Colors.black87),
-                                    decoration: InputDecoration(
+                                    decoration: new InputDecoration(
                                         border: InputBorder.none,
                                         contentPadding: EdgeInsets.only(
                                             left: 15, right: 5, top: 15),

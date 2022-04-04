@@ -42,8 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Stack(children: [
                         Image(image: AssetImage('assets/pesmacka.jpg')),
                         Positioned(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            top: MediaQuery.of(context).size.height * 0.27,
+                            height: MediaQuery.of(context).size.height * 0.11,
+                            top: MediaQuery.of(context).size.height * 0.25,
                             width: MediaQuery.of(context).size.width,
                             child: Container(
                               decoration: BoxDecoration(
